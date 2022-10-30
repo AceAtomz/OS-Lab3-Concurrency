@@ -15,7 +15,10 @@ typedef struct {
 
 
 /*Complete Structure Here*/
-
+typedef struct {
+    myarg_t val1;
+    myarg_t val2;
+} data_t;
 /*Complete Structure Here*/
 
 void *mythread(void *arg) {
@@ -34,7 +37,8 @@ int main(int argc, char *argv[]) {
     int arg1y = atoi(argv[2]);	
     int arg2x = atoi(argv[3]);	
     int arg2y = atoi(argv[4]);	
-    printf("arg1 x:%d y:%d\n", arg1x, arg1y);	
+    printf("arg1 x:%d y:%d\n", arg1x, arg1y);
+    printf("arg2 x:%d y:%d\n", arg2x, arg2y);
 
     pthread_t p;
     myret_t *rvals;
@@ -44,9 +48,9 @@ int main(int argc, char *argv[]) {
     data_t data = { args1, args2 };
 
     /*Complete Create Here*/
-
+    pthread_create(&p, NULL, mythread, &data);
     /*Complete Create Here*/
-    Pthread_join(p, (void **) &rvals);
+    pthread_join(p, (void **) &rvals);
 
     printf("returned %d %d\n", rvals->x, rvals->y);
     free(rvals);

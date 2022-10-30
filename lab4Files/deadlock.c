@@ -43,13 +43,12 @@ int main(int argc, char *argv[]) {
     }
     pthread_t p1, p2;
     printf("main: begin\n");
-    Pthread_create(&p1, NULL, thread1, NULL); 
     Pthread_create(&p2, NULL, thread2, NULL);
+    Pthread_create(&p1, NULL, thread1, NULL); 
+    
     // join waits for the threads to finish
     Pthread_join(p1, NULL); 
     Pthread_join(p2, NULL); 
     printf("main: end\n");
     return 0;
 }
-
-

@@ -11,7 +11,9 @@ int done = 0;
 void *child(void *arg) {
     printf("child: begin\n");
     sleep(1);
+    Mutex_lock(&m);
     done = 1;
+    Mutex_unlock(&m);
     printf("child: signal\n");
     Cond_signal(&c);
     return NULL;
@@ -20,16 +22,16 @@ int main(int argc, char *argv[]) {
     pthread_t p;
     printf("parent: begin\n");
     Pthread_create(&p, NULL, child, NULL);
+   
     Mutex_lock(&m);
     printf("parent: check condition\n");
     while (done == 0) {
-	//sleep(2);
+	sleep(2);
 	printf("parent: wait to be signalled...\n");
 	Cond_wait(&c, &m); 
     }
+
     Mutex_unlock(&m);
     printf("parent: end\n");
     return 0;
 }
-
-
